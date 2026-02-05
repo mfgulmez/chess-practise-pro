@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Practise Pro</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+    <link rel="stylesheet" href="/src/styles/main.css">
+    <link rel="stylesheet" href="/src/styles/board.css">
+    <link rel="stylesheet" href="/src/styles/ui.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+</head>
+<body>
+
+<div class="app-container">
+    
+    <div class="board-layout">
+        <div class="game-info">
+            <div class="player-bar">
+                <div id="material-top" class="material"></div>
+                <div id="timer-b" class="timer">05:00</div>
+            </div>
+        </div>
+
+        <div id="board"></div>
+
+        <div class="game-info" style="margin-top: 10px;">
+            <div class="player-bar">
+                <div id="material-bottom" class="material"></div>
+                <div id="timer-w" class="timer">05:00</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-layout">
+        <div class="dashboard">
+            <div id="status-text" class="status-pill">Ready</div>
+
+            <div class="actions-grid">
+                <button class="danger" id="btn-reset">
+                    <svg viewBox="0 0 24 24"><path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12z"/></svg>
+                    Reset
+                </button>
+                <button id="btn-undo">
+                    <svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
+                    Undo
+                </button>
+                <button id="btn-redo">
+                    <svg viewBox="0 0 24 24"><path d="M18.4 10.6C16.55 9 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z"/></svg>
+                    Redo
+                </button>
+                <button id="btn-explore">
+                    <svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                    Book
+                </button>
+                <button id="btn-hint">
+                    <svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6A4.997 4.997 0 017 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/></svg>
+                    Hint
+                </button>
+                <button class="primary" id="btn-flip">
+                    <svg viewBox="0 0 24 24"><path d="M21 12l-7-7v4C7 9 7 14 7 14s1 2.5 4 4.5l-2 2c-4-2.5-6-6-6-9 0-6 5-8 5-8V3l7 7h6z"/></svg>
+                    Flip
+                </button>
+                <button id="btn-analyze">
+                    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                    Analyze Game
+                </button>
+            </div>
+
+            <div class="settings-grid">
+                <div class="select-wrapper">
+                    <select id="gameMode">
+                        <option value="pvc">👤 vs 🤖</option>
+                        <option value="pvp">👤 vs 👤</option>
+                        <option value="cvc">🤖 vs 🤖</option>
+                    </select>
+                </div>
+                <div class="select-wrapper">
+                    <select id="timeControl">
+                        <option value="-1,0" selected>∞ Timeless</option>
+                        <option value="60,0">⚡ Bullet 1m</option>
+                        <option value="180,2">🔥 Blitz 3+2</option>
+                        <option value="300,5">⏱ Rapid 5+5</option>
+                        <option value="600,0">🐢 Classic 10m</option>
+                    </select>
+                </div>
+                <div class="select-wrapper full-width">
+                    <select id="difficulty">
+                        <option value="1">🟢 Difficulty: Easy</option>
+                        <option value="5" selected>🟡 Difficulty: Medium</option>
+                        <option value="15">🔴 Difficulty: Hard</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="analysisModal" class="bottom-modal">
+    <div class="progress-bar-container"><div id="analysisProgress" class="progress-bar"></div></div>
+    <div class="modal-header">
+        <div class="modal-title" id="analysisTitle">Analysis Ready</div>
+        <button class="close-btn" id="close-analysis">×</button>
+    </div>
+    <div id="analysisContent" class="modal-content"></div>
+</div>
+
+<div id="explorerModal" class="bottom-modal">
+    <div class="modal-header">
+        <div class="modal-title">Opening Explorer</div>
+        <button class="close-btn" id="close-explorer">×</button>
+    </div>
+    <div id="explorerContent" class="modal-content"></div>
+</div>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

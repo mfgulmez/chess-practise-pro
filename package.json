@@ -1,0 +1,19 @@
+{
+  "name": "chess-practise-pro",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "chess.js": "^0.10.3",
+    "@chrisoakman/chessboardjs": "^1.0.0",
+    "jquery": "^3.5.1"
+  },
+  "devDependencies": {
+    "vite": "^4.0.0"
+  }
+}
