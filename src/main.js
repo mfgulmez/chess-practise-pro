@@ -31,14 +31,23 @@ const actions = {
         // Logic
         state.game.reset();
         state.redoStack = [];
-        state.board.position('start');
+        
+        // --- FIX START ---
+        // Instead of manually resetting board & highlights, 
+        // we call this helper which updates Board, Highlights, AND Material.
+        Board.updateBoardUI(); 
+        // --- FIX END ---
+
         Clock.stopClock();
         Clock.updateClockUI();
         
         // UI
         $('#btn-analyze').hide();
         $('#status-text').text('New Game').removeClass('game-over');
-        $('.highlight-move, .highlight-hint').removeClass('highlight-move highlight-hint');
+        
+        // (You can remove the manual highlight clearing line below, 
+        //  since Board.updateBoardUI() handles it now)
+        // $('.highlight-move, .highlight-hint').removeClass('highlight-move highlight-hint');
         
         state.currentJob = null;
         engine.stop();
